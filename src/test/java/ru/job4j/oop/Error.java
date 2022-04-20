@@ -27,5 +27,6 @@ public class Error {
         firstError.printInfo();
         Error secondError = new Error(false, 0, "not active");
         secondError.printInfo();
+        defaultError.printInfo();
     }
 }
