@@ -4,7 +4,7 @@ public class Calculator {
     private static int x = 5;
 
     public static int minus(int a) {
-        return x - a;
+        return a - x;
     }
 
     public static int sum(int y) {
@@ -16,7 +16,7 @@ public class Calculator {
     }
 
     public int divide(int a) {
-        return x / a;
+        return a / x;
     }
 
     public int sumAllOperation(int a) {
