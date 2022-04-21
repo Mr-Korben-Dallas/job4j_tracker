@@ -47,18 +47,22 @@ public class Tracker {
 
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        if (index != -1) {
+        boolean isIndexExists = index != -1;
+        if (isIndexExists) {
             items[index] = item;
             item.setId(id);
         }
-        return index != -1;
+        return isIndexExists;
     }
 
     public boolean delete(int id) {
         int index = indexOf(id);
-        System.arraycopy(items, index, items, index + 1, (size - index - 1));
-        items[size - 1] = null;
-        size--;
-        return index != -1;
+        boolean isIndexExists = index != -1;
+        if (isIndexExists) {
+            System.arraycopy(items, index, items, index + 1, (size - index - 1));
+            items[size - 1] = null;
+            size--;
+        }
+        return isIndexExists;
     }
 }
