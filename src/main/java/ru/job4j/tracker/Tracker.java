@@ -49,8 +49,8 @@ public class Tracker {
         int index = indexOf(id);
         boolean isIndexExists = index != -1;
         if (isIndexExists) {
-            items[index] = item;
             item.setId(id);
+            items[index] = item;
         }
         return isIndexExists;
     }
