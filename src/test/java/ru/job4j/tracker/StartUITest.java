@@ -69,12 +69,15 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu." + ln
+                "Menu."
+                        + ln
                         + "=== Edit item ===" + ln
                         + "The item changed successfully." + ln
                         + "Menu." + ln
         ));
-    }@Test
+    }
+
+    @Test
     public void whenFindAllTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         Tracker tracker = new Tracker();
@@ -88,7 +91,8 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu." + ln
+                "Menu."
+                        + ln
                         + "=== Show all items ===" + ln
                         + one + ln
                         + two + ln
@@ -111,7 +115,8 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu." + ln
+                "Menu."
+                        + ln
                         + "=== Find items by name ===" + ln
                         + one + ln
                         + "Menu." + ln
@@ -134,7 +139,8 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu." + ln
+                "Menu."
+                        + ln
                         + "=== Find item by id ===" + ln
                         + two + ln
                         + "Menu." + ln
