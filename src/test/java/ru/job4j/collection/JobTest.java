@@ -102,8 +102,26 @@ public class JobTest {
         Job task2 = new Job("Impl task", 0);
         Job task3 = new Job("Close Ticket", 2);
         Job task4 = new Job("Open Ticket", 3);
-        List<Job> list = Arrays.asList(task1, task2, task3, task4);
-        List<Job> expected = List.of(task4, task2, task1, task3);
+        Job task42 = new Job("Open Ticket", 3);
+        List<Job> list = Arrays.asList(task1, task2, task3, task4, task42);
+        List<Job> expected = List.of(task4, task42, task2, task1, task3);
+        list.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
+        assertEquals(expected, list);
+    }
+
+    @Test
+    public void whenCompatorByPriorityAndByNameDescWithDuplicates() {
+        Job task1 = new Job("Fix bug", 1);
+        Job task12 = new Job("Fix bug", 1);
+        Job task13 = new Job("Fix bug", 1);
+        Job task2 = new Job("Impl task", 0);
+        Job task22 = new Job("Impl task", 0);
+        Job task3 = new Job("Close Ticket", 2);
+        Job task4 = new Job("Open Ticket", 3);
+        Job task42 = new Job("Open Ticket", 3);
+        Job task43 = new Job("Open Ticket", 3);
+        List<Job> list = Arrays.asList(task1, task12, task13, task2, task22, task3, task4, task42, task43);
+        List<Job> expected = List.of(task4, task42, task43, task2, task22, task1, task12, task13, task3);
         list.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
         assertEquals(expected, list);
     }
