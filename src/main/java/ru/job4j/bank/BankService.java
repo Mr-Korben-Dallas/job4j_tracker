@@ -18,7 +18,7 @@ public class BankService {
 
     /**
      * Метод принимает на вход объект класса User и добавляет его в HashMap users.
-     * @param user
+     * @param user новый клиент.
      */
     public void addUser(User user) {
         users.putIfAbsent(user, new ArrayList<>());
@@ -29,9 +29,8 @@ public class BankService {
      * Находим клиента по номеру паспорта и получаем все его существующе аккаунты в список.
      * Сравниваем принятый объект с существующими аккаунтами,
      * если такого нет то добавляем его в список.
-     *
-     * @param passport
-     * @param account
+     * @param passport паспортные данные.
+     * @param account номер счета.
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
@@ -46,8 +45,8 @@ public class BankService {
     /**
      * Метод принимает на вход номер паспорта клиента.
      * Возвращает клиента по паспорту если такой имеется в базе.
-     * @param passport
-     * @return Возвращает клиента по паспорту если такой имеется в базе.
+     * @param passport паспорт
+     * @return значение {@code User}
      */
     public User findByPassport(String passport) {
         for (User user : users.keySet()) {
@@ -62,9 +61,9 @@ public class BankService {
      * Метод принимает на вход паспорт и реквизиты.
      * По паспорту находим клиента.
      * Если такой имеется, то ищем есть ли такой аккаунт с определенными реквизитами.
-     * @param passport
-     * @param requisite
-     * @return Возвращает аккаунт клиента.
+     * @param passport паспорт
+     * @param requisite номер счета
+     * @return значение {@code Account}
      */
     public Account findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
@@ -84,13 +83,12 @@ public class BankService {
      * и количество денег для перевода.
      * Осуществляет перевод с первого счета на второй
      * если на первом хватает средств для перевода
-     * @return Возвращает результат операции в виде true или false.
-     * @param srcPassport
-     * @param srcRequisite
-     * @param destPassport
-     * @param destRequisite
-     * @param amount
-     *
+     * @param srcPassport паспорт отправителя
+     * @param srcRequisite счет отправителя
+     * @param destPassport паспорт получателя
+     * @param destRequisite счет получателя
+     * @param amount сумма перевода
+     * @return {@code true} если перевод произведен, {@code false} если не произведен
      */
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
