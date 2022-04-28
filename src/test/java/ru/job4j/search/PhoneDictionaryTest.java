@@ -9,19 +9,19 @@ import static org.junit.Assert.*;
 public class PhoneDictionaryTest {
     @Test
     public void whenFindByName() {
-        PhoneDictionary phones = new PhoneDictionary();
+        var phones = new PhoneDictionary();
         phones.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         phones.add(new Person("John", "Doe", "12345", "Moskow"));
-        ArrayList<Person> persons = phones.find("Petr");
+        var persons = phones.find("Petr");
         assertThat(persons.get(0).getSurname(), is("Arsentev"));
     }
 
     @Test
     public void whenNoOneFound() {
-        PhoneDictionary phones = new PhoneDictionary();
+        var phones = new PhoneDictionary();
         phones.add(new Person("Petr", "Arsentev", "534872", "Bryansk"));
         phones.add(new Person("John", "Doe", "12345", "Moskow"));
-        ArrayList<Person> persons = phones.find("Patrick");
+        var persons = phones.find("Patrick");
         assertTrue(persons.isEmpty());
     }
 }
