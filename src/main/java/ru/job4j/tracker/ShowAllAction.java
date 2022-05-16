@@ -8,22 +8,22 @@ public class ShowAllAction implements UserAction {
     public ShowAllAction(Output output) {
         this.output = output;
     }
-    
+
     @Override
     public String name() {
         return "Show all items";
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store store) {
         output.println("=== Show all items ===");
-        List<Item> items = tracker.findAll();
+        List<Item> items = store.findAll();
         if (items.size() > 0) {
             for (Item item : items) {
                 output.println(item);
             }
         } else {
-            output.println("The Tracker does not yet contain any items");
+            output.println("The MemTracker does not yet contain any items");
         }
         return true;
     }
