@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
@@ -67,24 +68,24 @@ public class SqlTrackerTest {
     @Test
     public void whenAllItemsFounded() {
         Store tracker = new SqlTracker(connection);
-        Item itemF = new Item("First");
-        tracker.add(itemF);
-        Item itemS = new Item("Second");
-        tracker.add(itemS);
-        Item itemT = new Item("Third");
-        tracker.add(itemT);
-        assertThat(tracker.findAll().size(), is(3));
+        List<Item> items = List.of(
+                new Item("First"),
+                new Item("Second"),
+                new Item("Third")
+        );
+        items.forEach(tracker::add);
+        assertThat(tracker.findAll(), is(items));
     }
 
     @Test
     public void whenItemFoundByName() {
         Store tracker = new SqlTracker(connection);
-        Item itemF = new Item("First");
-        tracker.add(itemF);
-        Item itemS = new Item("Second");
-        tracker.add(itemS);
-        Item itemT = new Item("Third");
-        tracker.add(itemT);
+        List<Item> items = List.of(
+                new Item("First"),
+                new Item("Second"),
+                new Item("Third")
+        );
+        items.forEach(tracker::add);
         assertThat(tracker.findByName("Second").size(), is(1));
     }
 
