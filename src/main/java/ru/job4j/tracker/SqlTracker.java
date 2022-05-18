@@ -110,15 +110,16 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public Item findById(int id) {
+        Item item = new Item();
         try (PreparedStatement ps = connection.prepareStatement("select * from items where id = ?;")) {
             ps.setInt(1, id);
             try (ResultSet resultSet = ps.executeQuery()) {
-                return getItemFromResultSet(resultSet).get(0);
+                item = getItemFromResultSet(resultSet).get(0);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return item;
     }
 
     private List<Item> getItemFromResultSet(ResultSet resultSet) throws Exception {
