@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.model.Item;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +12,10 @@ public class SqlTracker implements Store, AutoCloseable {
     private Connection connection;
 
     public SqlTracker() {
-        init();
+    }
+
+    public SqlTracker(Connection connection) {
+        this.connection = connection;
     }
 
     public void init() {
@@ -86,7 +91,9 @@ public class SqlTracker implements Store, AutoCloseable {
         List<Item> items = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement("select * from items;")) {
             try (ResultSet resultSet = ps.executeQuery()) {
-                return getItemFromResultSet(resultSet);
+                while (resultSet.next()) {
+                    items.add(getItemFromResultSet(resultSet));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +107,9 @@ public class SqlTracker implements Store, AutoCloseable {
         try (PreparedStatement ps = connection.prepareStatement("select * from items where name like ?;")) {
             ps.setString(1, key);
             try (ResultSet resultSet = ps.executeQuery()) {
-                return getItemFromResultSet(resultSet);
+                while (resultSet.next()) {
+                    items.add(getItemFromResultSet(resultSet));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,26 +119,24 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public Item findById(int id) {
-        Item item = new Item();
         try (PreparedStatement ps = connection.prepareStatement("select * from items where id = ?;")) {
             ps.setInt(1, id);
             try (ResultSet resultSet = ps.executeQuery()) {
-                item = getItemFromResultSet(resultSet).get(0);
+                if (resultSet.next()) {
+                    return getItemFromResultSet(resultSet);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return item;
+        return null;
     }
 
-    private List<Item> getItemFromResultSet(ResultSet resultSet) throws Exception {
-        List<Item> items = new ArrayList<>();
-        while (resultSet.next()) {
-            Item item = new Item(resultSet.getString("name"));
-            item.setId(resultSet.getInt("id"));
-            item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-            items.add(item);
-        }
-        return items;
+    private Item getItemFromResultSet(ResultSet resultSet) throws Exception {
+        return new Item(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getTimestamp("created").toLocalDateTime()
+        );
     }
 }
