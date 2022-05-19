@@ -68,25 +68,19 @@ public class SqlTrackerTest {
     @Test
     public void whenAllItemsFounded() {
         Store tracker = new SqlTracker(connection);
-        List<Item> items = List.of(
-                new Item("First"),
-                new Item("Second"),
-                new Item("Third")
-        );
-        items.forEach(tracker::add);
-        assertThat(tracker.findAll(), is(items));
+        Item first = tracker.add(new Item("First"));
+        Item second = tracker.add(new Item("Second"));
+        Item third = tracker.add(new Item("third"));
+        assertThat(tracker.findAll(), is(List.of(first, second, third)));
     }
 
     @Test
     public void whenItemFoundByName() {
         Store tracker = new SqlTracker(connection);
-        List<Item> items = List.of(
-                new Item("First"),
-                new Item("Second"),
-                new Item("Third")
-        );
-        items.forEach(tracker::add);
-        assertThat(tracker.findByName("Second").size(), is(1));
+        Item first = tracker.add(new Item("First"));
+        Item second = tracker.add(new Item("Second"));
+        Item third = tracker.add(new Item("third"));
+        assertThat(tracker.findByName("Second"), is(List.of(second)));
     }
 
     @Test
