@@ -14,10 +14,6 @@ import java.util.function.Predicate;
 
 public class XmlReport implements Report {
     private Store store;
-    private JAXBContext jaxbContext;
-    private Marshaller marshaller;
-    private String xmlReport;
-    private List<Employee> employees;
 
     public XmlReport(Store store) {
         this.store = store;
@@ -25,10 +21,11 @@ public class XmlReport implements Report {
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        employees = store.findBy(filter);
+        List<Employee> employees = store.findBy(filter);
+        String xmlReport = "";
         try (StringWriter writer = new StringWriter()) {
-            jaxbContext = JAXBContext.newInstance(Employees.class);
-            marshaller = jaxbContext.createMarshaller();
+            JAXBContext jaxbContext = JAXBContext.newInstance(Employees.class);
+            Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(new Employees(employees), writer);
             xmlReport = writer.getBuffer().toString();
