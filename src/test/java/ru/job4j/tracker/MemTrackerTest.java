@@ -1,13 +1,10 @@
 package ru.job4j.tracker;
 
-import org.junit.Test;
 import ru.job4j.tracker.model.Item;
 
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNull.nullValue;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class MemTrackerTest {
     @Test
@@ -17,7 +14,7 @@ public class MemTrackerTest {
         item.setName("test1");
         memTracker.add(item);
         Item result = memTracker.findById(item.getId());
-        assertThat(result.getName(), is(item.getName()));
+        assertThat(result.getName()).isEqualTo(item.getName());
     }
 
     @Test
@@ -26,7 +23,7 @@ public class MemTrackerTest {
         Item bug = new Item("Bug");
         Item item = memTracker.add(bug);
         Item result = memTracker.findById(item.getId());
-        assertThat(result.getName(), is(item.getName()));
+        assertThat(result.getName()).isEqualTo(item.getName());
     }
 
     @Test
@@ -37,7 +34,7 @@ public class MemTrackerTest {
         memTracker.add(first);
         memTracker.add(second);
         List<Item> result = memTracker.findAll();
-        assertThat(result.get(0).getName(), is(first.getName()));
+        assertThat(result.get(0).getName()).isEqualTo(first.getName());
     }
 
     @Test
@@ -51,7 +48,7 @@ public class MemTrackerTest {
         memTracker.add(new Item("Second"));
         memTracker.add(new Item("First"));
         List<Item> result = memTracker.findByName(first.getName());
-        assertThat(result.size(), is(3));
+        assertThat(result.size()).isEqualTo(3);
     }
 
     @Test
@@ -65,7 +62,7 @@ public class MemTrackerTest {
         memTracker.add(new Item("Second"));
         memTracker.add(new Item("First"));
         List<Item> result = memTracker.findByName(second.getName());
-        assertThat(result.get(1).getName(), is(second.getName()));
+        assertThat(result.get(1).getName()).isEqualTo(second.getName());
     }
 
     @Test
@@ -78,7 +75,7 @@ public class MemTrackerTest {
         Item bugWithDesc = new Item();
         bugWithDesc.setName("Bug with description");
         memTracker.replace(id, bugWithDesc);
-        assertThat(memTracker.findById(id).getName(), is("Bug with description"));
+        assertThat(memTracker.findById(id).getName()).isEqualTo("Bug with description");
     }
 
     @Test
@@ -89,6 +86,6 @@ public class MemTrackerTest {
         memTracker.add(bug);
         int id = bug.getId();
         memTracker.delete(id);
-        assertThat(memTracker.findById(id), is(nullValue()));
+        assertThat(memTracker.findById(id)).isNull();
     }
 }

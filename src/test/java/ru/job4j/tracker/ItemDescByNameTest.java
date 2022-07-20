@@ -1,13 +1,12 @@
 package ru.job4j.tracker;
 
-import org.junit.Test;
 import ru.job4j.tracker.model.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class ItemDescByNameTest {
     @Test
@@ -29,6 +28,6 @@ public class ItemDescByNameTest {
                 new Item("1")
         ));
         Collections.sort(items, new ItemDescByName());
-        assertEquals(expected, items);
+        assertThat(expected).isEqualTo(items);
     }
 }

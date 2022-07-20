@@ -1,13 +1,10 @@
 package ru.job4j.map;
 
-import org.junit.Test;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class CollegeTest {
     @Test
@@ -25,7 +22,7 @@ public class CollegeTest {
                 )
         );
         College college = new College(students);
-        assertThat(college.findByAccount("000010"), is(Optional.empty()));
+        assertThat(college.findByAccount("000010")).isEqualTo(Optional.empty());
     }
 
     @Test
@@ -43,7 +40,7 @@ public class CollegeTest {
                 )
         );
         College college = new College(students);
-        assertThat(college.findByAccount("000001").get().getGroup(), is("201-18-15"));
+        assertThat(college.findByAccount("000001").get().getGroup()).isEqualTo("201-18-15");
     }
 
     @Test
@@ -61,7 +58,7 @@ public class CollegeTest {
                 )
         );
         College college = new College(students);
-        assertThat(college.findBySubjectName("000010", "Sociology"), is(Optional.empty()));
+        assertThat(college.findBySubjectName("000010", "Sociology")).isEqualTo(Optional.empty());
     }
 
     @Test
@@ -79,7 +76,7 @@ public class CollegeTest {
                 )
         );
         College college = new College(students);
-        assertThat(college.findBySubjectName("000001", "Sociology"), is(Optional.empty()));
+        assertThat(college.findBySubjectName("000001", "Sociology")).isEqualTo(Optional.empty());
     }
 
     @Test
@@ -97,6 +94,6 @@ public class CollegeTest {
                 )
         );
         College college = new College(students);
-        assertThat(college.findBySubjectName("000002", "Sociology").get().getScore(), is(65));
+        assertThat(college.findBySubjectName("000002", "Sociology").get().getScore()).isEqualTo(65);
     }
 }

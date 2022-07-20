@@ -1,13 +1,11 @@
 package ru.job4j.tracker;
 
-import org.junit.Test;
 import ru.job4j.tracker.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class StartUITest {
     @Test
@@ -22,7 +20,7 @@ public class StartUITest {
                 new ExitAction()
         ));
         new StartUI(output).init(in, memTracker, actions);
-        assertThat(memTracker.findAll().get(0).getName(), is("Item name"));
+        assertThat(memTracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
@@ -39,7 +37,7 @@ public class StartUITest {
                 new ExitAction()
         ));
         new StartUI(output).init(in, memTracker, actions);
-        assertThat(memTracker.findById(item.getId()).getName(), is(replacedName));
+        assertThat(memTracker.findById(item.getId()).getName()).isEqualTo(replacedName);
     }
 
     @Test
@@ -55,7 +53,7 @@ public class StartUITest {
                 new ExitAction()
         ));
         new StartUI(output).init(in, memTracker, actions);
-        assertNull(memTracker.findById(item.getId()));
+        assertThat(memTracker.findById(item.getId())).isNull();
     }
 
     @Test
@@ -73,7 +71,7 @@ public class StartUITest {
         ));
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu." + ln
                         + "0. Edit item" + ln
                         + "1. Exit" + ln
@@ -82,7 +80,7 @@ public class StartUITest {
                         + "Menu." + ln
                         + "0. Edit item" + ln
                         + "1. Exit" + ln
-        ));
+        );
     }
 
     @Test
@@ -98,7 +96,7 @@ public class StartUITest {
         ));
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu." + ln
                         + "0. Show all items" + ln
                         + "1. Exit" + ln
@@ -108,7 +106,7 @@ public class StartUITest {
                         + "Menu." + ln
                         + "0. Show all items" + ln
                         + "1. Exit" + ln
-        ));
+        );
     }
 
     @Test
@@ -125,7 +123,7 @@ public class StartUITest {
         ));
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu." + ln
                         + "0. Find items by name" + ln
                         + "1. Exit" + ln
@@ -134,7 +132,7 @@ public class StartUITest {
                         + "Menu." + ln
                         + "0. Find items by name" + ln
                         + "1. Exit" + ln
-        ));
+        );
     }
 
     @Test
@@ -152,7 +150,7 @@ public class StartUITest {
         ));
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu." + ln
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
@@ -161,7 +159,7 @@ public class StartUITest {
                         + "Menu." + ln
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
-        ));
+        );
     }
 
     @Test
@@ -176,13 +174,12 @@ public class StartUITest {
         ));
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu." + ln
                         + "0. Exit" + ln
                         + "Wrong input, you can select: 0 .. 0" + ln
                         + "Menu." + ln
                         + "0. Exit" + ln
-                )
         );
     }
 }

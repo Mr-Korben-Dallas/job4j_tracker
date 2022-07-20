@@ -1,8 +1,7 @@
 package ru.job4j.collection;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 
 public class LexSortTest {
@@ -19,6 +18,6 @@ public class LexSortTest {
                 "10. Task."
         };
         Arrays.sort(input, new LexSort());
-        assertThat(input, is(out));
+        assertThat(input).isEqualTo(out);
     }
 }

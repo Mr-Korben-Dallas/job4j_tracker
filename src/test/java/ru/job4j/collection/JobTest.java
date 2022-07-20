@@ -1,14 +1,10 @@
 package ru.job4j.collection;
 
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class JobTest {
     @Test
@@ -18,7 +14,7 @@ public class JobTest {
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1)
         );
-        assertThat(rsl, lessThan(0));
+        assertThat(rsl).isLessThan(0);
     }
 
     @Test
@@ -28,7 +24,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2);
         List<Job> expected = List.of(task2, task1);
         list.sort(new JobDescByName());
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -38,7 +34,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2);
         List<Job> expected = List.of(task1, task2);
         list.sort(new JobDescByPriority());
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -49,7 +45,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3);
         List<Job> expected = List.of(task2, task1, task3);
         list.sort(new JobAscByPriority());
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -60,7 +56,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3);
         List<Job> expected = List.of(task3, task1, task2);
         list.sort(new JobAscByName());
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -71,7 +67,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3);
         List<Job> expected = List.of(task3, task1, task2);
         list.sort(new JobAscByName().thenComparing(new JobAscByPriority()));
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -82,7 +78,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3);
         List<Job> expected = List.of(task3, task1, task2);
         list.sort(new JobAscByName().thenComparing(new JobDescByPriority()));
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test public void whenCompatorByNameAndByPriorityDesc() {
@@ -93,7 +89,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3, task4);
         List<Job> expected = List.of(task4, task2, task1, task3);
         list.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -106,7 +102,7 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task2, task3, task4, task42);
         List<Job> expected = List.of(task4, task42, task2, task1, task3);
         list.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 
     @Test
@@ -123,6 +119,6 @@ public class JobTest {
         List<Job> list = Arrays.asList(task1, task12, task13, task2, task22, task3, task4, task42, task43);
         List<Job> expected = List.of(task4, task42, task43, task2, task22, task1, task12, task13, task3);
         list.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
-        assertEquals(expected, list);
+        assertThat(expected).isEqualTo(list);
     }
 }

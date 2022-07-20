@@ -1,16 +1,15 @@
 package ru.job4j.design.srp;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import org.junit.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 import ru.job4j.design.srp.entity.Employee;
 import ru.job4j.design.srp.report.*;
 import ru.job4j.design.srp.store.MemStore;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.StringJoiner;
 
 public class ReportEngineTest {
     private static MemStore store;
@@ -19,7 +18,7 @@ public class ReportEngineTest {
     private static SimpleDateFormat formatter;
     private static Calendar calendar;
 
-    @Before
+    @BeforeAll
     public void setUp() {
         store = new MemStore();
         calendar = Calendar.getInstance();
@@ -28,7 +27,7 @@ public class ReportEngineTest {
         formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     }
 
-    @After
+    @AfterAll
     public void tearDown() {
         store = null;
         firstEmployee = null;
@@ -47,7 +46,7 @@ public class ReportEngineTest {
                 .append(firstEmployee.getFired()).append(";")
                 .append(firstEmployee.getSalary()).append(";")
                 .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 
     @Test
@@ -66,7 +65,7 @@ public class ReportEngineTest {
                 .append(firstEmployee.getHired()).append(";")
                 .append(firstEmployee.getSalary()).append(";")
                 .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 
     @Test
@@ -81,7 +80,7 @@ public class ReportEngineTest {
                 .append(firstEmployee.getFired()).append(";")
                 .append(99).append(";")
                 .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 
     @Test
@@ -110,7 +109,7 @@ public class ReportEngineTest {
                 .append("</table>").append(System.lineSeparator())
                 .append("</body>").append(System.lineSeparator())
                 .append("</html>");
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 
     @Test
@@ -149,7 +148,7 @@ public class ReportEngineTest {
                 .append("\n")
                 .append("</xmlReport>")
                 .append("\n");
-        assertThat(xmlReport.generate(em -> true), is(expect.toString()));
+        assertThat(xmlReport.generate(em -> true)).isEqualTo(expect.toString());
     }
 
     @Test
@@ -190,6 +189,6 @@ public class ReportEngineTest {
                         calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND),
                         secondEmployee.getSalary()))
                 .append("}]");
-        assertThat(jsonReport.generate(em -> true), is(expect.toString()));
+        assertThat(jsonReport.generate(em -> true)).isEqualTo(expect.toString());
     }
 }
