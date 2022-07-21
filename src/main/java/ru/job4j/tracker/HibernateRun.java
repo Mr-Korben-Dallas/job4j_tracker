@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.tracker.model.Item;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Log4j2
@@ -17,7 +18,7 @@ public class HibernateRun {
                 .configure().build();
         try {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            Item item = create(new Item("Learn Hibernate"), sf);
+            Item item = create(new Item("Learn Hibernate", LocalDateTime.now(), "Some description"), sf);
             log.debug(item);
             item.setName("Learn Hibernate 6.");
             update(item, sf);
